@@ -1,0 +1,62 @@
+<h2>Agregar Producto</h2>
+<form id="product-form">
+  <input type="text" id="title" placeholder="Nombre" required />
+  <input type="text" id="description" placeholder="Descripción" required />
+  <input type="number" id="price" placeholder="Precio" required />
+  <input type="text" id="thumbnail" placeholder="Imagen" />
+  <input type="text" id="code" placeholder="Código" required />
+  <input type="number" id="stock" placeholder="Stock" required />
+  <input type="text" id="category" placeholder="categoria" required />
+  <button type="submit">Agregar</button>
+</form>
+
+<h1>Lista de Productos en Tiempo Real</h1>
+<ul id="product-list">
+  {{#each products}}
+  <li id="producto-{{this._id}}">
+    <strong>{{this.title}}</strong> - ${{this.price}}
+    <button onclick="eliminarProducto('{{this._id}}')">❌</button>
+  </li>
+  {{/each}}
+</ul>
+
+
+<script src="/socket.io/socket.io.js"></script>
+<script>
+  const socket = io();
+
+  document.getElementById("product-form").addEventListener("submit", async (event) => {
+    event.preventDefault();
+
+    const producto = {
+      title: document.getElementById("title").value,
+      description: document.getElementById("description").value,
+      price: parseFloat(document.getElementById("price").value),
+      thumbnail: document.getElementById("thumbnail").value,
+      code: document.getElementById("code").value,
+      stock: parseInt(document.getElementById("stock").value),
+      category: document.getElementById("category").value,
+    };
+
+    socket.emit("nuevoProducto", producto);
+  });
+
+  function eliminarProducto(id) {
+    console.log("eliminando producto con ID:", id);
+    socket.emit("eliminarProducto", id);
+  };
+
+  socket.on("actualizarProductos", (productos) => {
+
+    const productList = document.getElementById("product-list");
+    productList.innerHTML = "";
+
+    productos.forEach((producto) => {
+      const item = document.createElement("li");
+      item.id = `producto-${producto._id}`;
+      item.innerHTML = `<strong>${producto.title}</strong> - $${producto.price} 
+                        <button onclick="eliminarProducto(${producto._id})">❌</button>`;
+      productList.appendChild(item);
+    });
+  });
+</script>

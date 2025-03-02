@@ -1,0 +1,43 @@
+<h2>filtrar</h2>
+<p></p>
+<div>
+  <button id="categoryButton">Categorías</button>
+  <ul id="categoryDropdown"
+    style="display: none; list-style: none; padding: 0; border: 1px solid #ccc; position: absolute; background: white;">
+    {{#each categories}}
+    <li><a href="?category={{this}}" style="display: block; padding: 5px;">{{this}}</a></li>
+    {{/each}}
+  </ul>
+
+</div>
+
+<h1>Lista de Productos</h1>
+<ul>
+  {{#each products}}
+  <li>
+    <strong>{{this.title}}</strong>
+    - ${{this.price}}
+    <p>{{this.description}}</p>
+    <p>Código: {{this.code}}</p>
+    <p>Stock: {{this.stock}}</p>
+    <p>Categoría: {{this.category}}</p>
+    <img src="{{this.thumbnail}}" alt="{{this.title}}" width="100" />
+    <a href="">Agregar al carrito</a>
+  </li>
+  {{/each}}
+</ul>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const button = document.getElementById("categoryButton");
+    const dropdown = document.getElementById("categoryDropdown"); button.addEventListener("click", function () {
+      dropdown.style.display = dropdown.style.display === "none" ?
+        "block" : "none";
+    });
+    document.addEventListener("click", function (event) {
+      if (!button.contains(event.target) && !dropdown.contains(event.target)) {
+        dropdown.style.display = "none";
+      }
+    });
+  });
+</script>

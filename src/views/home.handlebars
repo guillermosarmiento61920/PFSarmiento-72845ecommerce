@@ -1,0 +1,21 @@
+<h2>Lista de Productos</h2>
+<ul>
+  {{#each products}}
+    <li>{{this.title}} - ${{this.price}}</li>
+  {{else}}
+    <li>No hay productos disponibles</li>
+  {{/each}}
+</ul>
+
+<p>
+  {{#if hasPrevPage}}
+    <a href="?page={{prevPage}}">Anterior</a>
+  {{/if}}
+  pagina
+  {{page}}
+  de
+  {{totalPages}}
+  {{#if hasNextPage}}
+    <a href="?page={{nextPage}}">Siguiente</a>
+  {{/if}}
+</p>

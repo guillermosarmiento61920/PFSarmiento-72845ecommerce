@@ -1,0 +1,13 @@
+<h1>Detalle de Productos</h1>
+<p>Carrito {{cart._id}}</p>
+
+<ul>
+  {{#each cart.products}}
+  <li>
+    <strong>{{this.product.title}}</strong> - ${{this.product.price}}
+    <p>{{this.product.description}}</p>
+    <p>Cantidad: {{this.quantity}}</p>
+    <button onclick="eliminarDelCarrito('{{../cart._id}}', '{{this.product._id}}')">Eliminar</button>
+  </li>
+  {{/each}}
+</ul>

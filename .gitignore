@@ -1,0 +1,7 @@
+node_modules/
+.prettierignore
+archivos.docx
+.env
+src/data/*
+src/CartManager.js
+src/ProductManager.js
