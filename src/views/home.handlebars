@@ -1,21 +1,43 @@
 <h2>Lista de Productos</h2>
 <ul>
   {{#each products}}
-    <li>{{this.title}} - ${{this.price}}</li>
+  <div class="card" style="width: 18rem;">
+    <img src="{{this.thumbnail}}" class="card-img-top" alt="...">
+    <div class="card-body">
+      <h5 class="card-title">{{this.title}}</h5>
+      <p class="card-text">{{this.description}}
+      </p>
+      <h4>${{this.price}}</h4>
+      <a href="/products/{{this._id}}" class="btn btn-primary">Ver mas</a>
+    </div>
+  </div>
   {{else}}
-    <li>No hay productos disponibles</li>
+  <p>No hay productos disponibles</p>
   {{/each}}
 </ul>
 
 <p>
-  {{#if hasPrevPage}}
-    <a href="?page={{prevPage}}">Anterior</a>
-  {{/if}}
   pagina
   {{page}}
   de
   {{totalPages}}
-  {{#if hasNextPage}}
-    <a href="?page={{nextPage}}">Siguiente</a>
-  {{/if}}
 </p>
+
+<nav aria-label="Page navigation example">
+  <ul class="pagination">
+    <li class="page-item">
+      {{#if hasPrevPage}}
+      <a class="page-link" href="?page={{prevPage}}" aria-label="Previous">
+        Anterior
+      </a>
+      {{/if}}
+    </li>
+    <li class="page-item">
+      {{#if hasNextPage}}
+      <a class="page-link" href="?page={{nextPage}}" aria-label="Next">
+        Siguiente
+      </a>
+      {{/if}}
+    </li>
+  </ul>
+</nav>

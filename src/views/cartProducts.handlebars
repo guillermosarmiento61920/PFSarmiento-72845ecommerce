@@ -1,5 +1,5 @@
 <h1>Detalle de Productos</h1>
-<p>Carrito {{cart._id}}</p>
+<p>Carrito: {{cart._id}}</p>
 
 <ul>
   {{#each cart.products}}
@@ -11,3 +11,24 @@
   </li>
   {{/each}}
 </ul>
+
+<script>
+  async function eliminarDelCarrito(cartId, productId) {
+    try {
+    const response = await fetch(`/cart/${cartId}/product/${productId}`, {
+      method: 'DELETE'
+    });
+
+    const data = await response.json();
+
+    if (response.ok) {
+      alert("Producto eliminado del carrito con éxito!");
+         window.location.reload();
+    } else {
+      alert("Error: " + data.message);
+    }
+  } catch (error) {
+    console.error("Error al eliminar producto: ", error);
+  }
+  }
+</script>

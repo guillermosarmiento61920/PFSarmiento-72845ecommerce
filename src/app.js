@@ -25,7 +25,11 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 // app.use(express.static(path.join(__dirname, "../public")));
 
-// Configuracion handlebars
+app.use((req, res, next) => {
+  req.io = io; 
+  next();
+});
+
 app.engine("handlebars", engine());
 app.set("view engine", "handlebars");
 app.set("views", "./src/views");

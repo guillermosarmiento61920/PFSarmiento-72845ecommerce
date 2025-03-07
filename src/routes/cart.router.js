@@ -75,7 +75,7 @@ cartRouter.delete("/:cid/product/:pid", async (req, res) => {
     const product = await Product.findById(pid);
     if (!product)
       return res.status(404).json({ error: "Producto no encontrado" });
-    cart.products = cart.products.filter((p) => p._id.toString() !== pid);
+    cart.products = cart.products.filter((p) => p.product.toString() !== pid);
 
     await cart.save();
 

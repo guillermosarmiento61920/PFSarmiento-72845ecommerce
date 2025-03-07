@@ -1,6 +1,6 @@
-// ./routes/products.router.js:
 import { Router } from "express";
 import Product from "../models/product.model.js";
+import Cart from "../models/cart.model.js";
 
 const router = Router();
 
@@ -12,7 +12,7 @@ router.get("/", async (req, res) => {
     const categories = await Product.distinct("category");
 
     res.render("products", { products, categories });
-    io.emit('actualizarProductos', await Product.find());
+    req.io.emit('actualizarProductos', await Product.find());
   } catch (error) {
     res.status(500).send({ message: error.message });
   }
@@ -49,7 +49,10 @@ router.get("/:pid", async (req, res) => {
     const { pid } = req.params;
     const product = await Product.findById(pid).lean();
 
-    res.render("product", {product});
+    const cart = await Cart.findOne().lean();
+    const cid = cart ? cart._id.toString() : null;
+
+    res.render("product", {product, cid});
 
   } catch (error) {
     res.status(500).send({ message: error.message });
